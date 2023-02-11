@@ -10,9 +10,9 @@ pd.options.plotting.backend = "plotly"
 def load_and_format_data(file_name: str) -> pd.DataFrame:
     """Loading and formatting data from tests"""
 
-    file = Path(__file__).parent.joinpath(f"data/{file_name}")
+    file = Path(__file__).parent.joinpath(f"{file_name}")
     if not os.path.exists(file):
-        raise Exception(f"File does not exists")
+        raise Exception(f"File does not exists: {file.__str__()}")
     
     with open(file, "r") as infile:
         lines = infile.readlines()
@@ -43,12 +43,13 @@ def load_and_format_data(file_name: str) -> pd.DataFrame:
     return pd.DataFrame.from_records(data=data, columns=columns, index="Time [ms]")
 
 
-def visualize_data(data: pd.DataFrame) -> None:
-    fig = data.plot.line(markers=True)
+def visualize_data(title: str, data: pd.DataFrame) -> None:
+    fig = data.plot.line(title=title, markers=True)
     fig.show()
 
 
 def select_data_subset(data: pd.DataFrame, index: list) -> pd.DataFrame:
+    assert len(index)==2
     subset_bool = np.logical_and(data.index >= index[0], data.index <= index[1])
     return data[subset_bool]
 
@@ -59,21 +60,14 @@ def estimate_average_voltage_and_current(data: pd.DataFrame) -> Tuple[float, flo
         data["Hub battery voltage [mV]"].mean()
     )
 
-def calc_electrical_resistance(V: List[float], I: List[float], tau: List[float], omega: List[float]) -> List[float]:
-    assert len(V) == len(I) and len(V) == len(tau) and len(V) == len(omega), "Input lists must be equal length" 
-    R = []
-    for i in range(len(V)):
-        R.append(
-            V[i]/I[i] - (tau[i]*omega[i])/(I[i]*I[i])
-        )
 
-    return R
 
 if __name__ == "__main__":
-    data = load_and_format_data("motor_test_04_02_2023__no1.txt")
+    data = load_and_format_data("motor_1_program_1.txt")
     visualize_data(data)
-    data = select_data_subset(data, [0,1950])
-    visualize_data(data)
-    I,V = estimate_average_voltage_and_current(data)
-    print(f"Estimated current: {np.round(I,3)} [mA];\tEstimated voltage: {np.round(V,3)} [mA]")
-    
+    #data = select_data_subset(data, [0,1950])
+    #visualize_data(data)
+
+
+
+
