@@ -1,0 +1,62 @@
+# Overview of references used in this repo
+
+
+
+## Inverted pendulum model
+
+### Model, transfer function, state space model, controllers:
+https://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=SystemModeling
+
+### Derivation of equations of motion.
+https://www.youtube.com/watch?v=5qJY-ZaKSic (Good explanations but missing moment of inertia for pole)
+
+
+## Motor model
+
+### Model, transfer function, state space model, controllers:
+https://ctms.engin.umich.edu/CTMS/index.php?example=MotorSpeed&section=SystemModeling
+
+### Derivation vidoes:
+https://www.youtube.com/watch?v=leMleP_Q5gs&t=381s
+https://www.youtube.com/watch?v=HCnMdfQgDmI
+
+### Approach for estimating motor parameters:
+https://my.mech.utah.edu/~me3200/labs/motors.pdf
+https://my.mech.utah.edu/~me3200/labs/S04Labs/S04_MotorChar_L04.pdf
+https://www.motioncontroltips.com/faq-difference-between-torque-back-emf-motor-constant/
+https://electronics.stackexchange.com/questions/110557/calculating-back-emf-from-torque-constant
+
+
+### Motor data:
+https://www.philohome.com/motors/motorcomp.htm
+https://le-www-live-s.legocdn.com/sc/media/files/support/spike-prime/techspecs_technicmediumangularmotor-19684ffc443792280359ef217512a1d1.pdf
+
+
+### Motor power supply:
+https://antonsmindstorms.com/2022/12/08/controlling-hobby-servos-with-lego-mindstorms-lms-esp32-tutorial-part-5/
+
+
+
+
+## Reference projects:
+https://kth.diva-portal.org/smash/get/diva2:916184/FULLTEXT01.pdf
+https://www.youtube.com/watch?v=7S66NxwkAxU
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
