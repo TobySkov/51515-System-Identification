@@ -15,10 +15,13 @@ fig = visalize_multiple_dataframes(
 fig.write_html("tests/all_motors.html")
 
 
+fig = visualize_data(
+    title = "Hub only, no motors",
+    data = load_and_format_data(file_name="hub_only.txt"),
+    )
 
 
-
-
+fig.write_html("tests/only_hub.html")
 
 
 
