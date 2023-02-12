@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 def load_and_format_data(file_name: str) -> pd.DataFrame:
     """Loading and formatting data from tests"""
 
-    file = Path(__file__).parent.joinpath(f"tests/{file_name}")
+    file = Path(__file__).parents[1].joinpath(f"test_results/{file_name}")
     if not os.path.exists(file):
         raise Exception(f"File does not exists: {file.__str__()}")
     

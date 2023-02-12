@@ -1,5 +1,7 @@
 from tests_helper_functions import *
+from pathlib import Path
 
+test_results_folder = Path(__file__).parents[1].joinpath("test_results")
 
 fig = visalize_multiple_dataframes(
     title="Motors step reponse tests",
@@ -12,7 +14,7 @@ fig = visalize_multiple_dataframes(
     ]
 )
 
-fig.write_html("tests/all_motors.html")
+fig.write_html(test_results_folder.joinpath("all_motors.html"))
 
 
 fig = visualize_data(
@@ -21,7 +23,7 @@ fig = visualize_data(
     )
 
 
-fig.write_html("tests/only_hub.html")
+fig.write_html(test_results_folder.joinpath("only_hub.html"))
 
 
 
