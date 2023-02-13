@@ -34,7 +34,7 @@ def load_and_format_data(file_name: str) -> pd.DataFrame:
 
         # Reading csv line
         if read_data:
-            data.append([float(x) for x in line.split(";")])
+            data.append([float(x) for x in line.replace(";\n","").split(";")])
 
         # Triggering reading data
         if "Data log" in line:
