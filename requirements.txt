@@ -1,3 +1,4 @@
 plotly==5.13.0
 pandas==1.5.3
 statsmodels==0.13.5
+bleak==0.19.5

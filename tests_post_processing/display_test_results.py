@@ -1,29 +1,15 @@
-from tests_helper_functions import *
+
 from pathlib import Path
+import pandas as pd
+pd.options.plotting.backend = "plotly"
+
+data_folder = Path(__file__).parents[1].joinpath('test_results')
+data = pd.read_pickle(data_folder.joinpath('2023_03_01_Motor_4.pkl'))
 
 test_figures_folder = Path(__file__).parents[1].joinpath("test_figures")
 
-fig = visalize_multiple_dataframes(
-    title="Motors step reponse tests",
-    subtitles=["Motor 1 test", "Motor 2 test", "Motor 3 test", "Motor 4 test"],
-    data=[
-        load_and_format_data(file_name="motor_1__2023_02_13.txt"),
-        load_and_format_data(file_name="motor_2__2023_02_13.txt"),
-        load_and_format_data(file_name="motor_3__2023_02_13.txt"),
-        load_and_format_data(file_name="motor_4__2023_02_13.txt")
-    ]
-)
 
-fig.write_html(test_figures_folder.joinpath("all_motors__2023_02_13.html"))
-
-
-fig = visualize_data(
-    title = "Hub only, no motors",
-    data = load_and_format_data(file_name="hub_only__2023_02_13.txt"),
-    )
-
-
-fig.write_html(test_figures_folder.joinpath("hub_only__2023_02_13.html"))
-
+fig = data.plot(x='Time [ms]', y=data.columns)
+fig.write_html(test_figures_folder.joinpath("2023_03_01_Motor_4.html"))
 
 
