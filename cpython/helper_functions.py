@@ -83,7 +83,7 @@ def estimate_average_voltage_and_current(data: pd.DataFrame) -> Tuple[float, flo
     )
 
 
-def rpm_to_rad_per_s(rpm: np.ndarray):
+def rpm_to_rad_per_s(rpm: np.ndarray) -> np.ndarray:
     assert isinstance(rpm, np.ndarray)
 
     rad_per_s = np.zeros(len(rpm))
@@ -95,6 +95,13 @@ def rpm_to_rad_per_s(rpm: np.ndarray):
 
 
 
+def deg_per_s_to_rad_per_s(deg_per_s: np.ndarray) -> np.ndarray:
+    assert isinstance(deg_per_s, np.ndarray)
 
+    rad_per_s = np.zeros(len(deg_per_s))
 
+    divisor = 1/180.0
+    for i, number in enumerate(deg_per_s):
+        rad_per_s[i] = np.pi*number*divisor 
 
+    return rad_per_s

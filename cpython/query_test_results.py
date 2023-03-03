@@ -11,6 +11,7 @@ import asyncio
 import pandas as pd
 from pathlib import Path
 from bleak import BleakScanner, BleakClient
+from paths import test_results_folder
 
 
 async def run_ble_client(address: str, char_uuid: str, queue: list):
@@ -62,11 +63,11 @@ def data_filter(queue: list, path: Path) -> pd.DataFrame:
     header, data = all_data.split("Header-To-Data;")
 
     columns = header.split(',')
-    # Removing "Start-Header;";
+    # Removing "Start";
     del columns[0]
 
     lines = data.split(';')
-    # Removing "End-Measurements;"
+    # Removing "Done"
     del lines[-1]
 
     matrix = []
@@ -87,10 +88,9 @@ async def main():
     char_uuid = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
     queue = []
     await run_ble_client(address, char_uuid, queue)
-    data_folder = Path(__file__).parents[1].joinpath('test_results')
     data_filter(
         queue=queue, 
-        path=data_folder.joinpath('2023_03_03_Motor_1_Program_1.pkl')
+        path=test_results_folder.joinpath('2023_03_03_Motor_1_Program_1.pkl')
     )
 
 
