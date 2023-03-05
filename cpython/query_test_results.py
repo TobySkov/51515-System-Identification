@@ -52,18 +52,19 @@ def hub_filter(device, ad):
     return device.name and device.name.lower() == HUB_NAME.lower()
 
 
-def data_filter(queue: list, path: Path) -> pd.DataFrame:
+def data_filter(queue: list) -> pd.DataFrame:
     """Filtering data recieved from hub"""
     print("Start data filtering...", end="")
     all_data = ''.join(queue)
 
-    assert all_data[:6] == 'Start,'
+    assert all_data[:5] == 'Name:'
     assert all_data[-5:] == ';Done'
 
-    header, data = all_data.split("Header-To-Data;")
+    header, data = all_data.split(";Header-To-Data;")
 
     columns = header.split(',')
-    # Removing "Start";
+    # Removing "Name":
+    file_name = columns[0].replace('Name:', '')
     del columns[0]
 
     lines = data.split(';')
@@ -78,7 +79,7 @@ def data_filter(queue: list, path: Path) -> pd.DataFrame:
         matrix.append(row)
 
     data_structured = pd.DataFrame.from_records(data=matrix, columns=columns)
-    data_structured.to_pickle(path=path)
+    data_structured.to_pickle(path=test_results_folder.joinpath(f"{file_name}.pkl"))
     print("Done")
 
 
@@ -90,7 +91,6 @@ async def main():
     await run_ble_client(address, char_uuid, queue)
     data_filter(
         queue=queue, 
-        path=test_results_folder.joinpath('2023_03_03_Motor_1_Program_1.pkl')
     )
 
 
