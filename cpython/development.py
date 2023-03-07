@@ -5,19 +5,19 @@ from paths import test_results_folder
 from helper_functions import *
 
 data = pd.read_pickle(test_results_folder.joinpath('2023_03_05_Motor_1_with_colorsensor_Step_30.pkl'))
-data.plot(x='Time [ms]', y=data.columns, markers=True)
-
+fig = data.plot(x='Time [ms]', y=data.columns, markers=True)
+fig.show()
 
 ss_start_time = 700
 
+
+
+# Function start
 ss_subset = data['Time [ms]'] > ss_start_time
 
 ss_data = data[ss_subset]
 ss_data.reset_index(inplace=True, drop=True)
 
-
-#fig = ss_data.plot(x='Time [ms]', y=data.columns, markers=True)
-#fig.show()
 
 cycles = []
 cycle = []
@@ -31,7 +31,7 @@ for i in range(len(ss_data) - 1):
             start_new_cycle = cycle[2]
             cycle = [start_new_cycle]
 
-print(cycles)
+print(f"Identified cycles (start, mid, end) [ms]: {cycles}")
 
 deg_per_s = []
 for cycle in cycles:
@@ -39,7 +39,7 @@ for cycle in cycles:
     deg_per_s.append(ms_per_round_to_deg_per_s(ms_per_round))
 
 
-# Steady state data with full cycles color sensor measurements:
+# Steady state data with full cycles colorsensor (cs) measurements:
 ss_cs_data = ss_data[
       (cycles[0][0] < ss_data['Time [ms]']) & (ss_data['Time [ms]'] <= cycles[-1][2])
 ]
