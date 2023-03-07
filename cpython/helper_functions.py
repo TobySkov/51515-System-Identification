@@ -12,15 +12,39 @@ def rpm_to_rad_per_s(rpm: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     """Revolutions per minute to radians per second"""
     return ((2*np.pi)/60.0)*rpm
 
-
 def deg_per_s_to_rad_per_s(deg_per_s: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     """Degrees per second to radians per second"""
     return (np.pi/180.0)*deg_per_s
 
-
 def deg_per_s_to_rpm(deg_per_s: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     """Degrees per second to revolutions per minute"""
     return (60.0/360.0)*deg_per_s
+
+def rpm_to_deg_per_s(rpm: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    """Revolutions per minute to degrees per second"""
+    return (360.0/60)*rpm
+
+def ms_per_round_to_deg_per_s(ms_per_round: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    """Milliseconds per round to degrees per second"""
+    rpm = 1/(ms_per_round/(60.0 * 1000.0))
+    return rpm_to_deg_per_s(rpm)
+
+
+def ols_motorvoltage_current_rotations(
+        V_motor: np.ndarray, 
+        I: np.ndarray, 
+        omega: np.ndarray,
+) -> RegressionResultsWrapper:
+    """Conducting ordinary least squares regression on equation:
+    
+    V_motor = I*R + omega*K_e
+    """
+    X = pd.DataFrame({
+        'R': I,
+        'K_e': omega,
+    })
+    
+    return sm.OLS(V_motor, X).fit()
 
 
 def select_voltage_current_rotations_steady_state_subset(
@@ -58,21 +82,7 @@ def select_voltage_current_rotations_steady_state_subset(
     return (V, I, omega, rpm)
 
 
-def ols_voltage_current_rotations(
-        V: np.ndarray, 
-        I: np.ndarray, 
-        omega: np.ndarray,
-) -> RegressionResultsWrapper:
-    """Conducting ordinary least squares regression on equation:
-    
-    V = I*R + K_e*omega
-    """
-    X = pd.DataFrame({
-        'R': I,
-        'K_e': omega,
-    })
-    
-    return sm.OLS(V, X).fit()
+
 
 
 
